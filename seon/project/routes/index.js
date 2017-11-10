@@ -24,5 +24,11 @@ router.get('/store', function(req, res, next) {
 router.get('/lank', function(req, res, next) {
   res.render('lank', { title: 'Express' });
 });
+router.get('/search', function(req, res, next) {
+  res.render('search', { title: 'Express' });
+});
+router.get('/review', function(req, res, next) {
+  res.render('review', { title: 'Express' });
+});
 
 module.exports = router;
