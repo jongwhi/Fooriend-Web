@@ -15,5 +15,14 @@ router.get('/login', function(req, res, next) {
 router.get('/regi', function(req, res, next) {
   res.render('regi', { title: 'Express' });
 });
+router.get('/board', function(req, res, next) {
+  res.render('board', { title: 'Express' });
+});
+router.get('/store', function(req, res, next) {
+  res.render('store', { title: 'Express' });
+});
+router.get('/lank', function(req, res, next) {
+  res.render('lank', { title: 'Express' });
+});
 
 module.exports = router;

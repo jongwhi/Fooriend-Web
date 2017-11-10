@@ -1,30 +1,84 @@
 <html>
     <head>
-        <title>Fooriend</title>
-        <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+        <% include ./head.ejs %>
     </head>
     <body>
-        <div class="menu">
-            <ul>
-                <span class="left">
-                    <li><a href="/"><span class="food">Foo<span class="friend">rien</span>d</span></a></li>
-                    <li><input type="text" size="50%"> <span><button type="submit">검색</button></span></li>
-                </span>
-                <span class="right">
-                    <li><a href=""><span>MENU</span></a>
-                        <ul>
-                            <li><a href="">맛집 등록</a></li>
-                            <li><a href="">맛집 랭킹</a></li>
-                        </ul>
-                    </li>
-                    <li><a href=""><span>LOGIN</span></a>
-                        <ul>
-                            <li><a href="/login">로그인하기</a></li>
-                            <li><a href="/register">회원가입</a></li>
-                        </ul>
-                    </li>
-                </span>
-            </ul>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Fooriend</a>
+                </div>
+                <div class="navbar-right">
+                <div class="btn-group">
+                    <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                        MENU
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/store">맛집 등록</a></li>
+                        <li><a href="/lank">맛집 랭킹</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                        Log In & Sign Up
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" >
+                        <li><a href="/login">Log In</a></li>
+                        <li><a href="/regi">Sign Up</a></li>
+                    </ul>
+                </div>
+                </div>
+            </div>
         </div>
+        <br><br><br>
+        <br><br><br>
+        <section>
+            <span class="images">
+                <a href="/board"><img src="images/1.jpg" width="33%"></a>
+                <img src="images/2.jpg" width="33%">
+                <img src="images/3.jpg" width="33%"><br>
+                <img src="images/4.jpg" width="33%">
+                <img src="images/5.jpg" width="33%">
+                <img src="images/6.jpg" width="33%">
+            </span>
+        </section>
+        <br><br><br>
+        <br><br><br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>번호</td>
+                    <td>제목</td>
+                    <td>작성자</td>
+                    <td>작성날짜</td>
+                    <td>조회수</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><a href="/board">첫번째 맛집</a></td>
+                    <td>seon</td>
+                    <td>2017.11.02</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>두번째 맛집</td>
+                    <td>seon</td>
+                    <td>2017.11.07</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>세번째 맛집</td>
+                    <td>seon</td>
+                    <td>2017.11.09</td>
+                    <td>8</td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
