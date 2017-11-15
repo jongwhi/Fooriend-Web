@@ -38,7 +38,7 @@ newUser.username = req.body.username;
 newUser.password = req.body.password;
 newUser.nickname = req.body.nickname;
 newUser.gender = req.body.gender;
-
+    
 newUser.save(function(err){
 if(err){
 console.error(err);
