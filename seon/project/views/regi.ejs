@@ -12,27 +12,27 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form id="login-form">
+                        <form id="login-form" action="/insert" method="post">
                             <div>
-                                <input type="text" class="form-control" name="username" placeholder="username" autofocus>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="username" autofocus>
                             </div><br>
                             <div>
-                                <input type="password" class="form-control" name="password" placeholder="password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="password">
                             </div><br>
                             <div>
-                                <input type="password" class="form-control" name="repassword" placeholder="repassword">
+                                <input type="password" class="form-control" id="repassword" name="repassword" placeholder="repassword">
                             </div><br>
                             <div>
-                                <input type="text" class="form-control" name="nickname" placeholder="nickname">
+                                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="nickname">
                             </div><br>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" class="form-control" name="sex" value="male"> 남자
+                                    <input type="radio" class="form-control" id="gender" name="gender" value="male"> 남자
                                 </label>
                             </div><br>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" class="form-control" name="sex" value="female"> 여자
+                                    <input type="radio" class="form-control" id="gender" name="gender" value="female"> 여자
                                 </label>
                             </div><br>
                             <div>
