@@ -3,41 +3,7 @@
         <% include ./head.ejs %>
     </head>
     <body>
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Fooriend</a>
-                </div>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search</button>
-                </form>
-                <div class="navbar-right">
-                    <div class="btn-group">
-                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
-                            MENU
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/store">맛집 등록</a></li>
-                            <li><a href="/lank">맛집 랭킹</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
-                            Log In & Sign Up
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" >
-                            <li><a href="/login">Log In</a></li>
-                            <li><a href="/regi">Sign Up</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <% include ./menubar.ejs %>
         <br><br><br>
         <br><br><br>
         <section>
