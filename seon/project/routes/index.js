@@ -48,4 +48,5 @@ return;
 res.redirect('/');
 });
 });
+
 module.exports = router;
