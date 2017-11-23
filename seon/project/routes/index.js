@@ -19,6 +19,7 @@ router.get('/', function(req, res, next) {
         res.render('index', {user: req.user});
     }
 });
+// app에서 login 하기 위해서 users table의 데이터 불러오기
 router.get('/get-user', function(req,res,next){
     User.find(function(err, users){
         if(err) {
@@ -27,6 +28,7 @@ router.get('/get-user', function(req,res,next){
         res.send(users);
     });
 });
+// app에서 stores table에서 맛집 정보 데이터 불러오기
 router.get('/get-store', function(req,res,next){
     Store.find(function(err, stores){
         if(err) {
