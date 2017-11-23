@@ -77,6 +77,7 @@ router.post('/register',function(req,res){
     // storeSquema에 입력받은 값 저장 -> stores db에 data 저장
     var newStore = new Store();
     newStore.title = req.body.title;
+    newStore.kind = req.body.kind;
 //    newStore = req.body.writer;
     newStore.address = req.body.address;
     newStore.opentime = req.body.opentime;
