@@ -2,16 +2,43 @@
         <br><br><br>
         <h3 align="center"><%= user.nickname %>님 어서오세요!</h3>
         <br><br><br>
-        <section>
-            <span class="images">
-                <a href="/store"><img src="images/1.jpg" width="33%"></a>
-                <img src="images/2.jpg" width="33%">
-                <img src="images/3.jpg" width="33%"><br>
-                <img src="images/4.jpg" width="33%">
-                <img src="images/5.jpg" width="33%">
-                <img src="images/6.jpg" width="33%">
-            </span>
-        </section>
+        <% if(content.length>0){ %>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>번호</td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>작성날짜</td>
+                <td>조회수</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% var i=0; %>
+            <% content.forEach(function(item){ %>
+            <% i++; %>
+            <tr>
+                <td class="number"><%= i %></td>
+                <td class="title"><a href="/store?id=<%= item._id %>"><%= item.title %></a></td>
+                <td class="writer"></td>
+                <td class="date"><%= dateFormatChange(item.date) %></td>
+                <td class="cnt"><%= item.count %></td>
+            </tr>
+            <% }) %>
+            <% } else{ %>
+            <tr>
+                <td colspan="5" align="center">게시물이 없습니다.</td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% function dateFormatChange(date){
+    var options={
+        weekday:"short",year:"numeric",month:"short",
+        day:"numeric",hour:"2-digit",minute:"2-digit"
+    };
+    return date.toLocaleTimeString("ko-KR",options);
+} %>
         <br><br><br>
         <br><br><br>
         <div>

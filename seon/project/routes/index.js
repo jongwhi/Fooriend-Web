@@ -14,9 +14,15 @@ router.get('/', function(req, res, next) {
     }
     // user 정보가 있으면 main page로 -> index.ejs
     if(Array.isArray(req.user)){
-        res.render('index', {user: req.user[0]._doc});
+        Store.find({}).sort({count:-1}).exec(function(err,rawContents){
+        if(err){throw err;}
+        res.render('index', {user: req.user[0]._doc, content:rawContents});
+        });
     } else{
-        res.render('index', {user: req.user});
+        Store.find({}).sort({count:-1}).exec(function(err,rawContents){
+        if(err){throw err;}
+        res.render('index', {user: req.user, content:rawContents});
+        });
     }
 });
 // app에서 login 하기 위해서 users table의 데이터 불러오기
