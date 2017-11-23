@@ -5,20 +5,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// mongoose 모듈 -> db
+// mongoose 모듈
 var mongoose = require('mongoose');
-// passport 모듈
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
-var cookieSession = require('cookie-session');
+// passport, session 모듈
+var session = require('express-session');
 var flash = require('connect-flash');
-
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
+// 라우트 분할
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-// mongodb 연결 -> db : fooriend
-mongoose.connect('mongodb://127.0.0.1:27017/fooriend')
+// database 연결 - db name:fooriend
+mongoose.connect('mongodb://127.0.0.1:27017/fooriend');
 // view 엔진 설정
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -28,13 +28,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// express session
-app.use(cookieSession({
-    keys: ['fooriend'],
-    cookie: {
-        maxAge: 1000 * 60 * 60 // 유효기간 1시간
-    }
+// session 정의
+app.use(session({
+    secret:'fooriend',
+    resave: true,
+    saveUninitialized: true
 }));
+// secret : 각 session이 client에서 암호화되도록함 - 쿠키해킹방지
+// resave : 미들웨어 옵션, true하면 session이 수정되지 않은 경우에도 session update
+// saveUninitialized : 미들웨어 옵션, 초기화되지 않은 session 재설정
 // passport 설정
 app.use(flash());
 app.use(passport.initialize());

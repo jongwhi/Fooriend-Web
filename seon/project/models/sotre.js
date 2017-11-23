@@ -5,15 +5,16 @@ var bcrypt = require('bcrypt-nodejs');
 var SALT_FACTOR = 10;
 // 몽구스 요청하고 필드 정의
 var userSchema = new Schema({
-    username: {type:String, required:true, unique:true},
-    password: {type:String, required:true},
-    nickname: {type:String, required:true, unique:true},
-    gender: String,
+    title: String,
+    images: String,
+    content: String,
+    address: String,
+    reservation: String,
     createdAt: {type:Date, default:Date.now},
 });
 // 모델에 간단한 메서드 추가
 userSchema.methods.name = function(){
-    return this.displayName || this.nickname;
+    return this.displayName || this.username;
 };
 //bcrypt를 위한 빈 함수
 var noop = function(){};

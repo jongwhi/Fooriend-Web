@@ -1,34 +1,31 @@
-<html>
-    <head>
-        <% include ./head.ejs %>
-    </head>
-    <body>
-        <% include ./menu.ejs %>
-        <div class="container">
-            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            Fooriend
-                        </div>
+<% include ./header.ejs %>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Fooriend
                     </div>
-                    <div class="panel-body">
-                        <form id="login-form" action="/gologin" method="post">
-                            <div>
-                                <input type="text" class="form-control" name="username" placeholder="username" autofocus>
-                            </div><br>
-                            <div>
-                                <input type="password" class="form-control" name="password" placeholder="password">
-                            </div><br>
-                            <div>
-                                <button type="submit" class="form-control btn btn-success">Log In</button>
+                </div>
+                <div class="panel-body">
+                    <form id="login-form" action="/login" method="post">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>username : <input type="text" class="form-control" id="username" name="username" placeholder="username" autofocus>
+                                </label>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>password : <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="form-control btn btn-success">Log In</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <h4 align="center"><a href="/regi">Sign Up</a></h4>
-        <h4 align="center"><a href="/">Home</a></h4>
-    </body>
-</html>
+<% include ./footer.ejs %>
