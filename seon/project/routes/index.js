@@ -5,42 +5,52 @@ var Store = require('../models/store');
 var router = express.Router();
 var localStrategy = require('passport-local').Strategy;
 
-/* GET home page. */
+// main page
 router.get('/', function(req, res, next) {
+    // user 정보가 없을 때 로그인 page로 이동
     if(!req.user){
         res.redirect('/login');
         return;
     }
+    // user 정보가 있으면 main page로 -> index.ejs
     if(Array.isArray(req.user)){
-        res.render('index', {user: req.user[0]._doc, enroll:""});
+        res.render('index', {user: req.user[0]._doc});
     } else{
-        res.render('index', {user: req.user,enroll:""});
+        res.render('index', {user: req.user});
     }
 });
+// login page -> login.ejs
 router.get('/login',function(req,res){
     res.render('login',{message: req.flash('loginmessage')});
 });
+// login page에서 login 버튼 클릭시 -> passport.authenticate('login') 함수 호출
 router.post('/login',passport.authenticate('login',{
-    successRedirect:'/',
-    failureRedirect:'/login',
+    successRedirect:'/', // login 성공 시 main page로 -> index.ejs
+    failureRedirect:'/login', // login 실패 시 login page로 -> login.ejs
     failureFlash: true
 }));
+// signup page - 회원가입 page -> signup.ejs
 router.get('/signup',function(req,res){
     res.render('signup', {message: req.flash('signupmessage')});
 });
+// signup page에서 signup 버튼 클릭시 -> passport.authenticate('signup') 함수 호출
 router.post('/signup',passport.authenticate('signup',{
-    successRedirect : '/login', 
-    failureRedirect : '/signup', 
+    successRedirect : '/login', // signup 성공 시 login page로 -> login.ejs
+    failureRedirect : '/signup', // signup 실패 시 signup page로 -> signup.ejs
     failureFlash : true
 }));
+// logout 버튼 클릭시
 router.get('/logout',function(req,res){
     req.logout();
     res.redirect('/');
 });
+// 맛집 등록 -> register.ejs
 router.get('/register',function(req,res){
     res.render('register');
 });
+// 맛집 등록 버튼 클릭 시
 router.post('/register',function(req,res){
+    // storeSquema에 입력받은 값 저장 -> stores db에 data 저장
     var newStore = new Store();
     newStore.title = req.body.title;
 //    newStore = req.body.writer;
@@ -56,25 +66,37 @@ router.post('/register',function(req,res){
             res.json({result:0});
             return;
         }
-        res.redirect('/');
+        res.redirect('/'); // 저장 성공시 main page로 -> index.ejs
     });
 });
+// 맛집 클릭 시 -> store.ejs
 router.get('/store',function(req,res){
     var storeId = req.param('id');
-    Store.findOne({'_id':storeId},function(err,rawContent){
+    // 넘겨받은 id값을 변수에 저장 후 db에서 해당 id를 가진 정보 찾아서 rawContent 변수에 저장
+    Store.findOne({'_id':storeId},function(err,rawContent){ 
         if(err){throw err;}
-        rawContent.count += 1;
+        rawContent.count += 1; // 조회수 +1
         rawContent.save(function(err){
             res.render('store',{content:rawContent});
         });
     });
 });
+// 게시판 메뉴 -> board.ejs
 router.get('/board',function(req,res){
+    // 최근 날짜 순으로 rawContents 변수에 저장
     Store.find({}).sort({date:-1}).exec(function(err,rawContents){
         if(err){throw err;}
         res.render('board',{content:rawContents});
     });
 });
+// 랭킹 메뉴 -> lanking.ejs
+router.get('/lanking', function(req,res){
+    Store.find({}).sort({count:-1}).exec(function(err,rawContents){
+        if(err){throw err;}
+        res.render('lanking',{content:rawContents});
+    });
+});
+// login 함수
 passport.use('login', new localStrategy({
     usernameField : 'username',
     passwordField : 'password',
@@ -87,6 +109,7 @@ passport.use('login', new localStrategy({
         return done(null, user);
     });
 }));
+// signup 함수
 passport.use('signup', new localStrategy({
     usernameField : 'username',
     passwordField : 'password',
