@@ -19,6 +19,22 @@ router.get('/', function(req, res, next) {
         res.render('index', {user: req.user});
     }
 });
+router.get('/get-user', function(req,res,next){
+    User.find(function(err, users){
+        if(err) {
+            return res.status(500).send({error: 'database failure'});
+        }
+        res.send(users);
+    });
+});
+router.get('/get-store', function(req,res,next){
+    Store.find(function(err, stores){
+        if(err) {
+            return res.status(500).send({error: 'database failure'});
+        }
+        res.send(stores);
+    });
+});
 // login page -> login.ejs
 router.get('/login',function(req,res){
     res.render('login',{message: req.flash('loginmessage')});
