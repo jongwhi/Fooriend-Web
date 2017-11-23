@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var User = require('../models/user');
+var Store = require('../models/store');
 var router = express.Router();
 var localStrategy = require('passport-local').Strategy;
 
@@ -30,20 +31,50 @@ router.get('/signup',function(req,res){
 router.post('/signup',passport.authenticate('signup',{
     successRedirect : '/login', 
     failureRedirect : '/signup', 
-    failureFlash : true 
+    failureFlash : true
 }));
 router.get('/logout',function(req,res){
     req.logout();
     res.redirect('/');
 });
-router.get('/store',function(req,res){
-    res.render('store');
+router.get('/register',function(req,res){
+    res.render('register');
 });
-router.post('/store',passport.authenticate('store',{
-    successRedirect: '/',
-    failureRedirect: '/store',
-    failureFlash: true
-}));
+router.post('/register',function(req,res){
+    var newStore = new Store();
+    newStore.title = req.body.title;
+//    newStore = req.body.writer;
+    newStore.address = req.body.address;
+    newStore.opentime = req.body.opentime;
+    newStore.closetime = req.body.closetime;
+    newStore.reservation = req.body.reservation;
+    newStore.phonenumber = req.body.phonenumber;
+//    newStore.images = req.body.images;
+    newStore.save(function(err){
+        if(err){
+            console.error(err);
+            res.json({result:0});
+            return;
+        }
+        res.redirect('/');
+    });
+});
+router.get('/store',function(req,res){
+    var storeId = req.param('id');
+    Store.findOne({'_id':storeId},function(err,rawContent){
+        if(err){throw err;}
+        rawContent.count += 1;
+        rawContent.save(function(err){
+            res.render('store',{content:rawContent});
+        });
+    });
+});
+router.get('/board',function(req,res){
+    Store.find({}).sort({date:-1}).exec(function(err,rawContents){
+        if(err){throw err;}
+        res.render('board',{content:rawContents});
+    });
+});
 passport.use('login', new localStrategy({
     usernameField : 'username',
     passwordField : 'password',
