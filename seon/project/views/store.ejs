@@ -1,16 +1,32 @@
-<html>
-    <head>
-        <% include ./head.ejs %>
-    </head>
-    <body>
-        <div class="container">
-            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            Fooriend
+<% include ./header.ejs %>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Fooriend
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label> Store name : <%= content.title %>
+                            </label>
                         </div>
                     </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label> Kind : <%= content.kind %>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label> Address : <%= content.address %>
+                            </label>
+                        </div>
+                    </div>
+<<<<<<< HEAD
                     <div class="panel-body">
                         <form id="login-form">
                             <div>
@@ -35,10 +51,27 @@
                                 <button type="submit" class="form-control btn btn-success">등록</button>
                             </div>
                         </form>
+=======
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label> Open Time : <%= content.opentime %> </label>
+                            <label> / Close Time : <%= content.closetime %> </label>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label> Reservation : <%= content.reservation %> </label>
+                            <label> / Phonenumber : <%= content.phonenumber %> </label>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label> Images :
+                            </label>
+                        </div>
+>>>>>>> 4a59b3539593adebc4f2163440518c7748177c31
                     </div>
                 </div>
             </div>
         </div>
-        <h4 align="center"><a href="/">Home</a></h4>
-    </body>
-</html>
+<% include ./footer.ejs %>

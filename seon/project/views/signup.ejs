@@ -1,0 +1,56 @@
+<% include ./header.ejs %>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Fooriend
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form action="/signup" method="post">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>username : <input type="text" class="form-control" id="username" name="username" placeholder="username" autofocus>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>password : <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>repassword : <input type="password" class="form-control" id="repassword" name="repassword" placeholder="repassword">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>nickname : <input type="nickname" class="form-control" id="nickname" name="nickname" placeholder="nickname">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>gender : 
+                                    <div class="radio">
+                                        <input type="radio" class="form-control" id="gender" name="gender" value="male"> 남자
+                                    </div>
+                                    <div class="radio">
+                                        <input type="radio" class="form-control" id="gender" name="gender" value="female"> 여자
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="form-control btn btn-success">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+<% include ./footer.ejs %>
+ 
