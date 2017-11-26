@@ -1,0 +1,8 @@
+
+> project@0.0.0 start /home/ubuntu/Fooriend-Web/seon/project
+> node ./bin/www
+
+(node:25971) DeprecationWarning: `open()` is deprecated in mongoose >= 4.11.0, use `openUri()` instead, or set the `useMongoClient` option if using `connect()` or `createConnection()`. See http://mongoosejs.com/docs/connections.html#use-mongo-client
+[0mGET / [36m302 [0m10.975 ms - 56[0m
+[0mGET /login [32m200 [0m8.066 ms - 3886[0m
+[0mGET /login [36m304 [0m2.960 ms - -[0m
