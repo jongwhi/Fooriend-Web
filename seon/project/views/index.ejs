@@ -1,10 +1,15 @@
-
 <html>
-    <head>
-        <% include ./head.ejs %>
+     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <title>Fooriend</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="navbar navbar-default navbar-fixed-top">
+       <div class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/"> Fooriend </a>
@@ -22,8 +27,8 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="/store">맛집 등록</a></li>
-                            <li><a href="/lank">맛집 랭킹</a></li>
+                            <li><a href="/register">맛집 등록</a></li>
+                            <li><a href="/board">맛집 게시판</a></li>
                         </ul>
                     </div>
                     <div class="btn-group">
@@ -33,13 +38,12 @@
                         </button>
                         <ul class="dropdown-menu" >
                             <li><a href="/login">Log In</a></li>
-                            <li><a href="/regi">Sign Up</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-<% include ./header.ejs %>
         <br><br><br>
         <h3 align="center"><%= user.nickname %>님 어서오세요!</h3>
         <br><br><br>
@@ -79,8 +83,5 @@
         day:"numeric",hour:"2-digit",minute:"2-digit"
     };
     return date.toLocaleTimeString("ko-KR",options);
-} %>
-        <br><br><br>
-        <br><br><br>
-        <div>
+} %>13940
 <% include ./footer.ejs %>
