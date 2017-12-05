@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var storeSchema = new Schema({
     title: String, // 맛집 이름
     kind: String, // 한식, 양식, 중식, 일식 등
-    //writer: String, // 작성자 - nickname
+    writer: String, // 작성자 - nickname
     address: String, // 맛집 주소
     opentime: String, // 영업 시간 - 오픈
     closetime: String, // 영업 시간 - 클로즈

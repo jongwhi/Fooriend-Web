@@ -1,4 +1,5 @@
 <% include ./header.ejs %>
+<br><br><br>
 <% if(content.length>0){ %>
 <div>
     <table class="table">
@@ -18,7 +19,7 @@
             <tr>
                 <td class="number"><%= i %></td>
                 <td class="title"><a href="/store?id=<%= item._id %>"><%= item.title %></a></td>
-                <td class="writer"></td>
+                <td class="writer"><%= item.writer %></td>
                 <td class="date"><%= dateFormatChange(item.date) %></td>
                 <td class="cnt"><%= item.count %></td>
             </tr>

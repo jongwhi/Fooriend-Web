@@ -1,4 +1,5 @@
 <% include ./header.ejs %>
+    <br><br><br>
     <div class="container">
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <div class="panel panel-success">
@@ -16,6 +17,12 @@
                     </div>
                     <div class="form-inline">
                         <div class="form-group">
+                            <label> Writer : <%= content.writer %>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
                             <label> Kind : <%= content.kind %>
                             </label>
                         </div>
@@ -26,30 +33,6 @@
                             </label>
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <form id="login-form">
-                            <div>
-                                <input type="text" class="form-control" name="title" placeholder="title" autofocus>
-                            </div><br>
-                            <div>
-                                <label for="InputSubject1">파일첨부</label>
-                                <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
-                                <div class="bootstrap-filestyle input-group">
-                                    <input type="text" id="userfile" class="form-control" name="userfile" disabled="">
-                                    <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                        <label for="fileInput" class="btn btn-default ">File Upload
-                                            <span class="glyphicon fa fa-upload"></span>
-                                        </label>
-                                    </span>
-                                </div>
-                            </div><br>
-                            <div>
-                                <textarea class="form-control" rows="5" name="contents" placeholder="write contents"></textarea>
-                            </div><br>
-                            <div>
-                                <button type="submit" class="form-control btn btn-success">등록</button>
-                            </div>
-                        </form>
                     <div class="form-inline">
                         <div class="form-group">
                             <label> Open Time : <%= content.opentime %> </label>
@@ -70,5 +53,43 @@
                     </div>
                 </div>
             </div>
+            <br><br><br>
+            <% if(review.length>0){ %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>번호</td>
+                        <td>제목</td>
+                        <td>작성자</td>
+                        <td>작성날짜</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% var i=0; %>
+                    <% review.forEach(function(item){ %>
+                    <% i++; %>
+                    <tr>
+                        <td class="number"><%= i %></td>
+                        <td class="title"><%= item.title %></td>
+                        <td class="writer"><%= item.writer %></td>
+                        <td class="date"><%= dateFormatChange(item.date) %></td>
+                    </tr>
+                    <% }) %>
+                    <% } else{ %>
+                    <tr>
+                        <td colspan="4" align="center">리뷰가 없습니다.</td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
         </div>
+    </div>
+    <h4 align="center"><a href="/review?data1=<%= content._id %>&data2=<%= user %>">review</a></h4>
+<% function dateFormatChange(date){
+    var options={
+        weekday:"short",year:"numeric",month:"short",
+        day:"numeric",hour:"2-digit",minute:"2-digit"
+    };
+    return date.toLocaleTimeString("ko-KR",options);
+} %>
 <% include ./footer.ejs %>

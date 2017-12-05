@@ -27,10 +27,11 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="/register">맛집 등록</a></li>
-                            <li><a href="/board">맛집 게시판</a></li>
+                            <li><a href="/register?id=<%= user._id %>">맛집 등록</a></li>
+                            <li><a href="/board?id=<%= user._id %>">맛집 게시판</a></li>
                         </ul>
                     </div>
+                    <% if(!user){ %>
                     <div class="btn-group">
                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
                             Log In & Sign Up
@@ -41,47 +42,58 @@
                             <li><a href="/signup">Sign Up</a></li>
                         </ul>
                     </div>
+                    <% }else{ %>
+                    <div class="btn-group">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                            Log Out & Update
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" >
+                            <li><a href="/logout">Log Out</a></li>
+                            <li><a href="/information?id=<%= user._id %>">Information</a></li>
+                        </ul>
+                    </div>
+                    <% } %>
                 </div>
             </div>
         </div>
         <br><br><br>
-        <h3 align="center"><%= user.nickname %>님 어서오세요!</h3>
-        <br><br><br>
         <% if(content.length>0){ %>
-    <table class="table">
-        <thead>
-            <tr>
-                <td>번호</td>
-                <td>제목</td>
-                <td>작성자</td>
-                <td>작성날짜</td>
-                <td>조회수</td>
-            </tr>
-        </thead>
-        <tbody>
-            <% var i=0; %>
-            <% content.forEach(function(item){ %>
-            <% i++; %>
-            <tr>
-                <td class="number"><%= i %></td>
-                <td class="title"><a href="/store?id=<%= item._id %>"><%= item.title %></a></td>
-                <td class="writer"></td>
-                <td class="date"><%= dateFormatChange(item.date) %></td>
-                <td class="cnt"><%= item.count %></td>
-            </tr>
-            <% }) %>
-            <% } else{ %>
-            <tr>
-                <td colspan="5" align="center">게시물이 없습니다.</td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>번호</td>
+                    <td>제목</td>
+                    <td>작성자</td>
+                    <td>작성날짜</td>
+                    <td>조회수</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% var i=0; %>
+                <% content.forEach(function(item){ %>
+                <% i++; %>
+                <tr>
+                    <td class="number"><%= i %></td>
+                    <td class="title"><a href="/store?id1=<%= item.title %>&id2=<%= user._id %>"><%= item.title %></a></td>
+                    <td class="writer"><%= item.writer %></td>
+                    <td class="date"><%= dateFormatChange(item.date) %></td>
+                    <td class="cnt"><%= item.count %></td>
+                </tr>
+                <% }) %>
+                <% } else{ %>
+                <tr>
+                    <td colspan="5" align="center">게시물이 없습니다.</td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </body>
+</html>
 <% function dateFormatChange(date){
     var options={
         weekday:"short",year:"numeric",month:"short",
         day:"numeric",hour:"2-digit",minute:"2-digit"
     };
     return date.toLocaleTimeString("ko-KR",options);
-} %>13940
-<% include ./footer.ejs %>
+} %>

@@ -5,12 +5,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var User = require('../models/user');
 var Store = require('../models/store');
+var Review = require('../models/review');
 var localStrategy = require('passport-local').Strategy;
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title : 'Fooriend' });
-});
 
 // main page
 router.get('/', function(req, res, next) {
@@ -77,7 +73,13 @@ router.get('/logout',function(req,res){
 });
 // 맛집 등록 -> register.ejs
 router.get('/register',function(req,res){
-    res.render('register');
+    var userId = req.param('id');
+    User.findOne({'_id':userId},function(err,newUser){ 
+        if(err){throw err;}
+        newUser.save(function(err){
+            res.render('register',{user:newUser});
+        });
+    });
 });
 // 맛집 등록 버튼 클릭 시
 router.post('/register',function(req,res){
@@ -85,7 +87,7 @@ router.post('/register',function(req,res){
     var newStore = new Store();
     newStore.title = req.body.title;
     newStore.kind = req.body.kind;
-//    newStore = req.body.writer;
+    newStore.writer = req.user.nickname;
     newStore.address = req.body.address;
     newStore.opentime = req.body.opentime;
     newStore.closetime = req.body.closetime;
@@ -103,14 +105,19 @@ router.post('/register',function(req,res){
 });
 // 맛집 클릭 시 -> store.ejs
 router.get('/store',function(req,res){
-    var storeId = req.param('id');
+    var storeTitle = req.param('id1');
     // 넘겨받은 id값을 변수에 저장 후 db에서 해당 id를 가진 정보 찾아서 rawContent 변수에 저장
-    Store.findOne({'_id':storeId},function(err,rawContent){ 
+    Review.find({'storetitle':storeTitle}).sort({date:-1}).exec(function(err,rawReview){
         if(err){throw err;}
-        rawContent.count += 1; // 조회수 +1
-        rawContent.save(function(err){
-            res.render('store',{content:rawContent});
-        });
+        else {
+            Store.findOne({'title':storeTitle},function(err,rawContent){ 
+                if(err){throw err;}
+                rawContent.count += 1; // 조회수 +1
+                rawContent.save(function(err){
+                res.render('store',{content:rawContent, user:req.param('id2'), review:rawReview});
+                });
+            });
+        }
     });
 });
 // 게시판 메뉴 -> board.ejs
@@ -119,6 +126,61 @@ router.get('/board',function(req,res){
     Store.find({}).sort({date:-1}).exec(function(err,rawContents){
         if(err){throw err;}
         res.render('board',{content:rawContents});
+    });
+});
+// review 쓰는 폼
+router.get('/review', function(req,res){
+    var storeId = req.param('data1');
+    var userId = req.param('data2');
+    User.findOne({'_id':userId},function(err,newUser){
+        if(err){throw err;}
+        newUser.save(function(err){
+            res.render('review',{user:newUser, store:storeId});
+        });
+    });
+});
+router.post('/review',function(req,res){
+    var newReview = new Review();
+    newReview.reviewtitle = req.body.reviewtitle;
+    newReview.storeid = req.store;
+    newReview.writer = req.user.nickname;
+    newReview.content = req.body.content;
+    newReview.save(function(err){
+        if(err){
+            console.error(err);
+            res.json({result:0});
+            return;
+        }
+        res.json(newReview);
+    });
+});
+// information 페이지 -> 회원 정보
+router.get('/information', function(req,res){
+    var userId = req.param('id');
+    User.findOne({'_id':userId},function(err,newUser){ 
+        if(err){throw err;}
+        newUser.save(function(err){
+            res.render('information',{user:newUser});
+        });
+    });
+});
+// update 페이지 -> 회원 정보 수정
+router.get('/update',function(req,res){
+    var userId = req.param('id');
+    User.findOne({'_id':userId},function(err,newUser){ 
+        if(err){throw err;}
+        newUser.save(function(err){
+            res.render('update',{user:newUser});
+        });
+    });
+});
+router.post('/update',function(req,res){
+    User.update({'_id':req.user._id},{$set:req.body},function(err,output){
+        if(err) res.status(500).json({ error: 'database failure' });
+        console.log(output);
+        if(!output.n) return res.status(404).json({ error: 'user not found' });
+        //res.json( { message: ‘book updated’ } );
+        res.redirect('/');
     });
 });
 // login 함수
