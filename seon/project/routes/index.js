@@ -17,6 +17,7 @@ router.get('/', function(req, res, next) {
     }
     // user 정보가 있으면 main page로 -> index.ejs
     if(Array.isArray(req.user)){
+        // stores table에서 조회수 순으로 rawContents에 저장
         Store.find({}).sort({count:-1}).exec(function(err,rawContents){
         if(err){throw err;}
         res.render('index', {user: req.user[0]._doc, content:rawContents});
@@ -70,13 +71,17 @@ router.post('/signup',passport.authenticate('signup',{
 router.get('/logout',function(req,res){
     req.logout();
     res.redirect('/');
+    // logout 성공 시 main page로 -> index.ejs
 });
 // 맛집 등록 -> register.ejs
 router.get('/register',function(req,res){
+    // 파라미터로 넘겨받은 값 변수에 저장
     var userId = req.param('id');
+    // 파라미터로 받은 값을 users table에서 비교 후 newUser 변수에 저장
     User.findOne({'_id':userId},function(err,newUser){ 
         if(err){throw err;}
         newUser.save(function(err){
+            // user라는 변수에 newUser 저장 후 register.ejs로 전달
             res.render('register',{user:newUser});
         });
     });
@@ -105,11 +110,13 @@ router.post('/register',function(req,res){
 });
 // 맛집 클릭 시 -> store.ejs
 router.get('/store',function(req,res){
+    // 파라미터로 넘겨받은 값 변수에 저장
     var storeTitle = req.param('id1');
-    // 넘겨받은 id값을 변수에 저장 후 db에서 해당 id를 가진 정보 찾아서 rawContent 변수에 저장
-    Review.find({'storetitle':storeTitle}).sort({date:-1}).exec(function(err,rawReview){
+    // reviews table에서 해당 id를 가진 정보 찾아서 rawContent 변수에 저장
+ Review.find({'storetitle':storeTitle}).sort({date:-1}).exec(function(err,rawReview){
         if(err){throw err;}
         else {
+            // stores table에서 변수 비교 후 rawContent 변수에 저장
             Store.findOne({'title':storeTitle},function(err,rawContent){ 
                 if(err){throw err;}
                 rawContent.count += 1; // 조회수 +1
