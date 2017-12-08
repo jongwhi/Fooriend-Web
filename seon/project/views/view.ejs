@@ -31,6 +31,18 @@
                             <li><a href="/board?id=<%= user._id %>">맛집 게시판</a></li>
                         </ul>
                     </div>
+                    <% if(user=='no'){ %>
+                    <div class="btn-group">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                            Log In & Sign Up
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" >
+                            <li><a href="/login">Log In</a></li>
+                            <li><a href="/signup">Sign Up</a></li>
+                        </ul>
+                    </div>
+                    <% }else{ %>
                     <div class="btn-group">
                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
                             Log Out & Update
@@ -41,6 +53,7 @@
                             <li><a href="/information?id=<%= user._id %>">Information</a></li>
                         </ul>
                     </div>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -53,31 +66,31 @@
                             Fooriend
                         </div>
                     </div>
-                </div>
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            현재 <%= user.nickname %>의 정보입니다.
-                        </div>
-                    </div>
                     <div class="panel-body">
                         <div class="form-inline">
                             <div class="form-group">
-                                <label> username : <%= user.username %> </label>
+                                <label> Images :<img src="<%= review.images %>"></label>
                             </div>
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
-                                <label> nickname : <%= user.nickname %> </label>
+                                <label> Store Name : <%= review.storename %> </label>
                             </div>
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
-                                <label> gender : <%= user.gender %> </label>
+                                <label> Grade : <%= review.grade %> </label>
                             </div>
                         </div>
-                        <div>
-                            <a href="/update?id=<%= user._id %>"><button type="submit" class="form-control btn btn-success">Update</button></a>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label> Writer : <%= review.writer %> </label>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label> Content : <%= review.content %> </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -86,3 +99,10 @@
         <h4 align="center"><a href="/?id=<%= user %>">Home</a></h4>
     </body>
 </html>
+<% function dateFormatChange(date){
+    var options={
+        weekday:"short",year:"numeric",month:"short",
+        day:"numeric",hour:"2-digit",minute:"2-digit"
+    };
+    return date.toLocaleTimeString("ko-KR",options);
+} %>

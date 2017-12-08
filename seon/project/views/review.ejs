@@ -1,39 +1,91 @@
-<% include ./header.ejs %>
-<br><br><br>
-    <div class="container">
-        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <div class="panel-title">
-                        Fooriend - <%= store %>
-                    </div>
+<html>
+     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <title>Fooriend</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+       <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/?id=<%= user._id %>"> Fooriend </a>
                 </div>
-                <div class="panel-body">
-                    <form action="/review" method="post">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label> review title : <input type="text" class="form-control" id="reviewtitle" name="reviewtitle" placeholder="reviewtitle">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label> content : <input type="text" class="form-control" id="content" name="content">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label> images : 
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <button type="submit" class="form-control btn btn-success">Review Register</button>
-                        </div>
-                    </form>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+                <div class="navbar-right">
+                    <div class="btn-group">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                            MENU
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/register?id=<%= user._id %>">맛집 등록</a></li>
+                            <li><a href="/board?id=<%= user._id %>">맛집 게시판</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                            Log Out & Update
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" >
+                            <li><a href="/logout">Log Out</a></li>
+                            <li><a href="/information?id=<%= user._id %>">Information</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-</div>
-<% include ./footer.ejs %>
+        <br><br><br>
+        <div class="container">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            Fooriend
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/review" method="post" enctype="multipart/form-data">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label> grade : <input type="text" class="form-control" id="grade" name="grade">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="storename" name="storename" value="<%= store.title %>">
+                                </div>
+                            </div>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label> content : <input type="text" class="form-control" id="content" name="content">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label> images : <input type="file" class="inputFile" id="images" name="images" multiple>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit" class="form-control btn btn-success">Review Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 align="center"><a href="/?id=<%= user %>">Home</a></h4>
+    </body>
+</html>

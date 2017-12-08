@@ -12,7 +12,7 @@
        <div class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/"> Fooriend </a>
+                    <a class="navbar-brand" href="/?id=<%= user._id %>"> Fooriend </a>
                 </div>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
@@ -31,7 +31,7 @@
                             <li><a href="/board?id=<%= user._id %>">맛집 게시판</a></li>
                         </ul>
                     </div>
-                    <% if(!user){ %>
+                    <% if(user=='no'){ %>
                     <div class="btn-group">
                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
                             Log In & Sign Up
@@ -58,7 +58,11 @@
             </div>
         </div>
         <br><br><br>
-        <% if(content.length>0){ %>
+        <% if(user=='no'){ %>
+        <% } else{ %>
+        <h3 align="center"><%= user.nickname %>님 환영합니다!</h3>
+        <% } %>
+        <% if(store.length>0){ %>
         <table class="table">
             <thead>
                 <tr>
@@ -71,11 +75,11 @@
             </thead>
             <tbody>
                 <% var i=0; %>
-                <% content.forEach(function(item){ %>
+                <% store.forEach(function(item){ %>
                 <% i++; %>
                 <tr>
                     <td class="number"><%= i %></td>
-                    <td class="title"><a href="/store?id1=<%= item.title %>&id2=<%= user._id %>"><%= item.title %></a></td>
+                    <td class="title"><a href="/store?id1=<%= item._id %>&id2=<%= user._id %>"><%= item.title %></a></td>
                     <td class="writer"><%= item.writer %></td>
                     <td class="date"><%= dateFormatChange(item.date) %></td>
                     <td class="cnt"><%= item.count %></td>
