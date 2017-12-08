@@ -213,6 +213,7 @@ router.get('/review', function(req,res){
 });
 // review 등록 시
 router.post('/review',upload.array('images'),function(req,res){
+    console.log('body : ' + req.user);
     var newReview = new Review();
     newReview.grade = req.body.grade;
     newReview.storename = req.body.storename;
