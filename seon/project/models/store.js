@@ -14,7 +14,15 @@ var storeSchema = new Schema({
     phonenumber: String, // 전화번호 - 예약 가능 할 시 입력
     images: String, // 이미지 파일 경로
     count: {type:Number, default:0}, // 조회수
-    date: {type:Date, default:Date.now} // 등록 시간
+    date: {type:Date, default:Date.now}, // 등록 시간
+    
+    // 리뷰 등록
+    review: String, // review 평점
+    //storeid: String,
+    reviewwriter: String, // review 작성자 - nickname
+    content: String, // review 내용
+    //reviewimages: String,
+    reviewdate: {type:Date, default:Date.now} // review 등록 시간
 });
 // 실제로 사용자 모델만들고 내보내기
 module.exports = mongoose.model('store', storeSchema);
