@@ -6,11 +6,7 @@ var userSchema = new Schema({
     password: {type: String, required: true},
     nickname: {type: String, required: true, unique: true},
     gender: String,
-<<<<<<< HEAD
     createdAt: {type:Date, default:Date.now}
-=======
-    createdAt: {type: Date, default: Date.now}
->>>>>>> 817880fcc3dd3571c26dcb6f09487261d2cbd0f5
 });
 
 // 실제로 사용자 모델만들고 내보내기

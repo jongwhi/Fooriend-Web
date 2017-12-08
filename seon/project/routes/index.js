@@ -27,15 +27,6 @@ var upload = multer({
 router.get('/', function(req, res, next) {
     // 유저 정보가 없으면 user에 no라는 데이터 입력 -> main page에서 메뉴에 login & signup 표시
     if(!req.user){
-<<<<<<< HEAD
-=======
-        res.redirect('/login');
-        return;
-    }
-    // user 정보가 있으면 main page로 -> index.ejs
-    if(Array.isArray(req.user)){
-        // stores table에서 조회수 순으로 rawContents에 저장
->>>>>>> 817880fcc3dd3571c26dcb6f09487261d2cbd0f5
         Store.find({}).sort({count:-1}).exec(function(err,rawContents){
             if(err){throw err;}
             res.render('index', {user: "no", store:rawContents});
@@ -101,7 +92,6 @@ router.get('/logout',function(req,res){
     res.redirect('/');
     // logout 성공 시 main page로 -> index.ejs
 });
-<<<<<<< HEAD
 // information 페이지 -> information.ejs로 이동 - 회원 정보 보기
 router.get('/information', function(req,res){
     var userId = req.param('id');
@@ -114,22 +104,11 @@ router.get('/information', function(req,res){
 });
 // update 페이지 -> 회원 정보 수정 -> update.ejs로 이동
 router.get('/update',function(req,res){
-=======
-// 맛집 등록 -> register.ejs
-router.get('/register',function(req,res){
-    // 파라미터로 넘겨받은 값 변수에 저장
->>>>>>> 817880fcc3dd3571c26dcb6f09487261d2cbd0f5
     var userId = req.param('id');
-    // 파라미터로 받은 값을 users table에서 비교 후 newUser 변수에 저장
     User.findOne({'_id':userId},function(err,newUser){ 
         if(err){throw err;}
         newUser.save(function(err){
-<<<<<<< HEAD
             res.render('update',{user:newUser});
-=======
-            // user라는 변수에 newUser 저장 후 register.ejs로 전달
-            res.render('register',{user:newUser});
->>>>>>> 817880fcc3dd3571c26dcb6f09487261d2cbd0f5
         });
     });
 });
@@ -183,7 +162,6 @@ router.post('/register',upload.array('images'),function(req,res){
         });
     }
 });
-<<<<<<< HEAD
 // 게시판 메뉴 -> board.ejs로 이동
 router.get('/board',function(req,res){
     var userId = req.param('id');
@@ -192,18 +170,6 @@ router.get('/board',function(req,res){
         newUser.save(function(err){
             // 최근 날짜 순으로 rawContents 변수에 저장
             Store.find({}).sort({date:-1}).exec(function(err,rawContents){
-=======
-// 맛집 클릭 시 -> store.ejs
-router.get('/store',function(req,res){
-    // 파라미터로 넘겨받은 값 변수에 저장
-    var storeTitle = req.param('id1');
-    // reviews table에서 해당 id를 가진 정보 찾아서 rawContent 변수에 저장
- Review.find({'storetitle':storeTitle}).sort({date:-1}).exec(function(err,rawReview){
-        if(err){throw err;}
-        else {
-            // stores table에서 변수 비교 후 rawContent 변수에 저장
-            Store.findOne({'title':storeTitle},function(err,rawContent){ 
->>>>>>> 817880fcc3dd3571c26dcb6f09487261d2cbd0f5
                 if(err){throw err;}
                 res.render('board',{store:rawContents, user:newUser});
             });
