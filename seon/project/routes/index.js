@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
         });
     // 유저 정보가 있으면 user에 유저 정보 입력 -> main page에서 메뉴에 logout & information 표시
     } else{
-        Store.find({}).sort({count:-1}).exec(function(err,rawContents){
+         Store.find({}).sort({count:-1}).exec(function(err,rawContents){
             if(err){throw err;}
             res.render('index', {user: req.user, store:rawContents});
         });
@@ -144,6 +144,7 @@ router.post('/register',upload.array('images'),function(req,res){
     newStore.opentime = req.body.opentime;
     newStore.closetime = req.body.closetime;
     newStore.reservation = req.body.reservation;
+    newStore.description = req.body.description;
     newStore.phonenumber = req.body.phonenumber;
     // 이미지 파일 저장
     images = req.files;
@@ -165,13 +166,22 @@ router.post('/register',upload.array('images'),function(req,res){
 // 게시판 메뉴 -> board.ejs로 이동
 router.get('/board',function(req,res){
     var userId = req.param('id');
+    var page = req.param('page');
+    if(page == null){page=1;}
+    var skipSize = (page-1)*10;
+    var limitSize = 10;
+    var pageNum=1;
     User.findOne({'_id':userId},function(err,newUser){ 
         if(err){throw err;}
         newUser.save(function(err){
             // 최근 날짜 순으로 rawContents 변수에 저장
-            Store.find({}).sort({date:-1}).exec(function(err,rawContents){
+            Store.count({},function(err, totalCount){
                 if(err){throw err;}
-                res.render('board',{store:rawContents, user:newUser});
+                pageNum = Math.ceil(totalCount/limitSize);
+                Store.find({}).sort({date:-1}).skip(skipSize).limit(limitSize).exec(function(err,rawContents){
+                    if(err){throw err;}
+                    res.render('board',{store:rawContents, user:newUser, pagination: pageNum, no:skipSize});
+                });
             });
         });
     });
@@ -250,7 +260,27 @@ router.get('/view',function(req,res){
             });
         });
     });
-})
+});
+// search board page -> search.ejs로 이동
+router.get('/search',function(req,res){
+    var userId = req.param('userId');
+    var search_word = req.param('searchWord');
+    console.log(search_word);
+    var searchCondition = {$regex:search_word};
+    console.log(searchCondition);
+    User.findOne({'_id':userId},function(err,newUser){
+        if(err){throw err;}
+        newUser.save(function(err){
+            if(err){throw err;}
+            Store.find({$or:[{title:searchCondition},{writer:searchCondition},{kind:searchCondition}]}).sort({date:-1}).exec(function(err, newStore){
+                if(err){throw err;}
+                console.log(newStore);
+                res.render('search',{user:newUser, store:newStore});
+            });
+        });
+    });
+});
+
 // login 함수
 passport.use('login', new localStrategy({
     usernameField : 'username',

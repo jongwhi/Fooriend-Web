@@ -7,6 +7,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+         <script>
+             $(function(){
+                 var page = location.href.split("page=")[1];
+                 var index = page-1;
+                 
+                 if(page == null){
+                     $(".pagination a:eq(" + index + ")").attr('class','current-page');
+                 }
+             });
+         </script>
     </head>
     <body>
        <div class="navbar navbar-default navbar-fixed-top">
@@ -71,7 +81,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% var i=0; %>
+                    <% var i=no; %>
                     <% store.forEach(function(item){ %>
                     <% i++; %>
                     <tr>
@@ -90,7 +100,16 @@
                 </tbody>
             </table>
         </div>
-        <h4 align="center"><a href="/?id=<%= user %>">Home</a></h4>
+        <center>
+            <div class="pagination">
+                <h4>
+                    <%for(var i=1; i<=pagination; i++){ %>
+                        <a href="/board?id=<%= user._id %>&page=<%= i %>" class="next-page"><%= i %></a>
+                    <% } %>
+                </h4>
+            </div>
+        </center>
+        <h3 align="center"><a href="/?id=<%= user %>">Home</a></h3>
     </body>
 </html>
 <% function dateFormatChange(date){

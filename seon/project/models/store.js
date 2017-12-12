@@ -13,6 +13,7 @@ var storeSchema = new Schema({
     reservation: String, // 예약 가능 여부
     phonenumber: String, // 전화번호 - 예약 가능 할 시 입력
     images: String, // 이미지 파일 경로
+    descriptions: String, // 맛집 설명
     count: {type:Number, default:0}, // 조회수
     date: {type:Date, default:Date.now}, // 등록 시간
 });

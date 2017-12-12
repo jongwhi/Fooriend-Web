@@ -7,6 +7,15 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script>
+            function searchContent() {
+                if($('#searchWord').val == ''){
+                    alert("검색어를 입력해주세요!!!");
+                } else {
+                    $('#searchAction').submit();
+                }
+            }
+        </script>
     </head>
     <body>
        <div class="navbar navbar-default navbar-fixed-top">
@@ -14,12 +23,15 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/?id=<%= user._id %>"> Fooriend </a>
                 </div>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search</button>
-                </form>
+                <div class="search">
+                    <form action="/search" class="navbar-form navbar-left" method="get" id="searchAction" name="searchAction">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userId" name="userId" value="<%= user._id %>">
+                            <input type="text" class="form-control" id="searchWord" name="searchWord">
+                        </div>
+                        <button class="btn btn-default"><a href="#" onclick="searchContent();"><div class="search_btn">Search</div></a></button>
+                    </form>
+                </div>
                 <div class="navbar-right">
                     <div class="btn-group">
                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
@@ -64,27 +76,26 @@
         <% } %>
         <% if(store.length>0){ %>
         <table class="table">
-            <thead>
-                <tr>
-                    <td>번호</td>
-                    <td>제목</td>
-                    <td>작성자</td>
-                    <td>작성날짜</td>
-                    <td>조회수</td>
-                </tr>
-            </thead>
+
             <tbody>
                 <% var i=0; %>
+                <tr>
                 <% store.forEach(function(item){ %>
                 <% i++; %>
-                <tr>
-                    <td class="number"><%= i %></td>
-                    <td class="title"><a href="/store?id1=<%= item._id %>&id2=<%= user._id %>"><%= item.title %></a></td>
-                    <td class="writer"><%= item.writer %></td>
-                    <td class="date"><%= dateFormatChange(item.date) %></td>
-                    <td class="cnt"><%= item.count %></td>
+                    <td align="center">
+                        <img src="<%= item.images %>" width="200" height="200">
+                        <h1> title : <%= item.title %></h1>
+                        <h3> writer : <%= item.writer %></h3>
+                        <p> kind : <%= item.kind %></p>
+                        <p> 조회수 : <%= item.count %></p>
+                    </td>
+                <% if(i%3 == 0){ %>
                 </tr>
+                <tr>
+                <% } %>
+                
                 <% }) %>
+                </tr>
                 <% } else{ %>
                 <tr>
                     <td colspan="5" align="center">게시물이 없습니다.</td>

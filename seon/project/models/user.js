@@ -6,6 +6,8 @@ var userSchema = new Schema({
     password: {type: String, required: true},
     nickname: {type: String, required: true, unique: true},
     gender: String,
+    reservation: String,
+    reservationtime: String,
     createdAt: {type:Date, default:Date.now}
 });
 
