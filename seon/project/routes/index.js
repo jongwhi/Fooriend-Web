@@ -97,8 +97,12 @@ router.get('/information', function(req,res){
     var userId = req.param('id');
     User.findOne({'_id':userId},function(err,newUser){ 
         if(err){throw err;}
-        newUser.save(function(err){
-            res.render('information',{user:newUser});
+        Store.find({'writer':newUser.nickname}).sort({date:-1}).exec(function(err,newStore){
+            if(err){throw err;}
+            Review.find({'writer':newUser.nickname}).sort({date:-1}).exec(function(err,newReview){
+                if(err){throw err;}
+                res.render('information', {user:newUser, store:newStore, review:newReview});
+            });
         });
     });
 });
@@ -190,17 +194,26 @@ router.get('/board',function(req,res){
 router.get('/store',function(req,res){
     var storeId = req.param('id1');
     var userId = req.param('id2');
+    var page = req.param('page');
+    if(page == null){page=1;}
+    var skipSize = (page-1)*10;
+    var limitSize = 10;
+    var pageNum=1;
     User.findOne({'_id':userId},function(err,newUser){
         if(err){throw err;}
         Store.findOne({'_id':storeId},function(err,rawContent){ 
             if(err){throw err;}
             rawContent.count += 1; // 조회수 +1
             rawContent.save(function(err){
-                // review db에서 storename에 해당하는 review들을 최근 날짜 순으로 newReview 변수에 저장
-                Review.find({'storename':rawContent.title}).sort({date:-1}).exec(function(err,newReview){
+                Review.count({},function(err,totalCount){
                     if(err){throw err;}
-                    res.render('store',{store:rawContent, user:newUser, review:newReview});
-                });
+                    pageNum = Math.ceil(totalCount/limitSize);
+                    // review db에서 storename에 해당하는 review들을 최근 날짜 순으로 newReview 변수에 저장
+                    Review.find({'storename':rawContent.title}).sort({date:-1}).skip(skipSize).limit(limitSize).exec(function(err,newReview){
+                        if(err){throw err;}
+                        res.render('store',{store:rawContent, user:newUser, review:newReview, pagination: pageNum, no:skipSize});
+                    });
+                });                
             });
         });
     });
@@ -299,15 +312,15 @@ passport.use('signup', new localStrategy({
     usernameField : 'username',
     passwordField : 'password',
     passReqToCallback : true }, function(req, username, password, done){
+    var paramrepassword = req.body.password || req.query.password;
     var paramnickname = req.body.nickname || req.query.nickname;
     var paramgender = req.body.gender || req.query.gender;
-    
     process.nextTick(function(){
         User.findOne({'username':username}, function(err, user){
             if(err) {return done(err);}
             if(user){
-                return done(null, false, req.flash('signupmessage', 'Already Using Username'));
-            } else{
+                return done(null, false, req.flash('signupmessage', '현재 username이 사용 중입니다.'));
+            }else{
                 var newUser = new User({'username':username, 'password':password, 'nickname':paramnickname, 'gender':paramgender});
                 newUser.save(function(err){
                     if(err) {throw err;}

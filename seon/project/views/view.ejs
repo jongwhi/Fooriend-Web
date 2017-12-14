@@ -7,6 +7,15 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script>
+            function searchContent() {
+                if($('#searchWord').val == ''){
+                    alert("검색어를 입력해주세요!!!");
+                } else {
+                    $('#searchAction').submit();
+                }
+            }
+        </script>
     </head>
     <body>
        <div class="navbar navbar-default navbar-fixed-top">
@@ -14,12 +23,15 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/?id=<%= user._id %>"> Fooriend </a>
                 </div>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search</button>
-                </form>
+                <div class="search">
+                    <form action="/search" class="navbar-form navbar-left" method="get" id="searchAction" name="searchAction">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userId" name="userId" value="<%= user._id %>">
+                            <input type="text" class="form-control" id="searchWord" name="searchWord">
+                        </div>
+                        <button class="btn btn-default"><a href="#" onclick="searchContent();"><div class="search_btn">Search</div></a></button>
+                    </form>
+                </div>
                 <div class="navbar-right">
                     <div class="btn-group">
                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
@@ -67,29 +79,25 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div class="form-inline">
+                        <div class="form-inline" align="center">
                             <div class="form-group">
-                                <label> Images :<img src="<%= review.images %>"></label>
+                                <h3> <%= review.storename %> </h3>
+                            </div>
+                        </div>
+                        <div class="form-inline" align="center">
+                            <div class="form-group">
+                                <label> <img src="<%= review.images %>" width="100%" height="400"></label>
                             </div>
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
-                                <label> Store Name : <%= review.storename %> </label>
+                                <label> 평점 : <%= review.grade %> / 작성자 : <%= review.writer %> </label>
                             </div>
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
-                                <label> Grade : <%= review.grade %> </label>
-                            </div>
-                        </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label> Writer : <%= review.writer %> </label>
-                            </div>
-                        </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label> Content : <%= review.content %> </label>
+                                <label> 리뷰 내용</label><br>
+                                <label><%= review.content %> </label>
                             </div>
                         </div>
                     </div>
