@@ -79,20 +79,22 @@
 
             <tbody>
                 <tr>
-                <% for(var i=1;i<10;i++){ %>
+                <% var i=0; %>
+                <% store.forEach(function(item){ %>
+                <% i++; %>
                     <td align="center">
-                        <a href="/store?id1=<%= store[i-1]._id %>&id2=<%= user._id %>"> <img src="<%= store[i-1].images %>" width="200" height="200"> </a>
-                        <h1> <%= store[i-1].title %></h1>
-                        <h3> <%= store[i-1].kind %></h3>
-                        <p> 등록자 : <%= store[i-1].writer %></p>
-                        <p> 조회수 : <%= store[i-1].count %></p>
+                        <a href="/store?id1=<%= item._id %>&id2=<%= user._id %>"> <img src="<%= item.images %>" width="200" height="200"> </a>
+                        <h1> <%= item.title %></h1>
+                        <h3> <%= item.kind %></h3>
+                        <p> 등록자 : <%= item.writer %></p>
+                        <p> 조회수 : <%= item.count %></p>
                     </td>
-                <% if(i%3 == 0){ %>
+                <% if(i % 3 == 0){ %>
                 </tr>
                 <tr>
                 <% } %>
-                
-                <% } %>
+                    
+                <% }); %>
                 </tr>
                 <% } else{ %>
                 <tr>

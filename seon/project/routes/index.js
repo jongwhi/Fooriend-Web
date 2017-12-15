@@ -27,13 +27,13 @@ var upload = multer({
 router.get('/', function(req, res, next) {
     // 유저 정보가 없으면 user에 no라는 데이터 입력 -> main page에서 메뉴에 login & signup 표시
     if(!req.user){
-        Store.find({}).sort({count:-1}).exec(function(err,rawContents){
+        Store.find({}).sort({count:-1}).limit(9).exec(function(err,rawContents){
             if(err){throw err;}
             res.render('index', {user: "no", store:rawContents});
         });
     // 유저 정보가 있으면 user에 유저 정보 입력 -> main page에서 메뉴에 logout & information 표시
     } else{
-         Store.find({}).sort({count:-1}).exec(function(err,rawContents){
+         Store.find({}).sort({count:-1}).limit(9).exec(function(err,rawContents){
             if(err){throw err;}
             res.render('index', {user: req.user, store:rawContents});
         });
@@ -59,7 +59,7 @@ router.get('/get-store', function(req,res,next){
 });
 // app에서 reviews table에서 리뷰 정보 데이터 불러오기
 router.get('/get-review', function(req,res,next){
-    Review.find(function(err, stores){
+    Review.find(function(err, reviews){
         if(err) {
             return res.status(500).send({error: 'database failure'});
         }
@@ -143,13 +143,13 @@ router.post('/register',upload.array('images'),function(req,res){
     var newStore = new Store();
     newStore.title = req.body.title;
     newStore.kind = req.body.kind;
-    newStore.writer = req.user.nickname;
     newStore.address = req.body.address;
     newStore.opentime = req.body.opentime;
     newStore.closetime = req.body.closetime;
     newStore.reservation = req.body.reservation;
-    newStore.description = req.body.description;
     newStore.phonenumber = req.body.phonenumber;
+    newStore.description = req.body.description;
+    newStore.writer = req.user.nickname;
     // 이미지 파일 저장
     images = req.files;
     if(isSaved(images)){
@@ -241,7 +241,7 @@ router.post('/review',upload.array('images'),function(req,res){
     newReview.grade = req.body.grade;
     newReview.storename = req.body.storename;
     newReview.content = req.body.content;
-    newReview.writer = req.user.nickname;
+    newReview.writer = req.body.nickname;
     // 이미지 파일 저장
     images = req.files;
     if(isSaved(images)){
